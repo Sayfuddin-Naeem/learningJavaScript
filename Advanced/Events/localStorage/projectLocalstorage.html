@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Local Storage Task</title>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body{
+            width: 100%;
+            height: 100vh;
+            background-image: linear-gradient(
+                to right top,
+                #051937,
+                #004d7a,
+                #008793,
+                #00bf72,
+                #a8eb12
+            );
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        #addBtn, #getBtn, #removeBtn{
+            width: 280px;
+            height: 40px;
+            color: #ffffff;
+            border: none;
+            border-radius: 30px;
+            padding: 5px;
+            margin-right: 10px;
+            margin-bottom: 20px;
+            font-size: 18px;
+            font-weight: 500;
+        }
+        #addBtn{background: #ed9417;}
+        #getBtn{background: #5fbe1b;}
+        #removeBtn{background: #ed5417;}
+    </style>
+</head>
+<body>
+    <section class="btn-container">
+        <button id="addBtn">Add Data to localStorage</button>
+        <button id="getBtn">Get Data from localStorage</button>
+        <button id="removeBtn">Delete Data from localStorage</button>
+    </section>
+    <script>
+        const employee = {
+            name: "Rahim",
+            position: "Web Developer",
+            contact: {
+                email: "rahim@company.com",
+                phone: "123-456-7890"
+            },
+            address: {
+                street: "123 Main St",
+                city: "Dhaka",
+                country: "Bangladesh"
+            }
+        };
+        const post = {
+            title: "My First Blog Post",
+            author: "Jane Smith",
+            content: "This is a sample blog post for demo.",
+            tags: ["coding", "life", "blog"],
+            published: true,
+            date: "2025-04-20"
+        };
+        const product = {
+            id: 101,
+            name: "Wireless Headphones",
+            price: 59.99,
+            inStock: true,
+            categories: ["electronics", "audio"],
+            rating: 4.5
+        };
+        const users = [
+            { id: 1, name: "Alice", email: "alice@gmail.com" },
+            { id: 2, name: "Bob", email: "bob@gmail.com" },
+            { id: 3, name: "Charlie", email: "charlie@gmail.com" }
+        ];
+
+        const addButton = document.getElementById("addBtn");
+        const getButton = document.getElementById("getBtn");
+        const removeButton = document.getElementById("removeBtn");
+
+        const addTodoList = ()=>{
+            localStorage.setItem("product", JSON.stringify(product));
+            alert("Item added into local storage !!");
+        };
+        const getTodoList = ()=>{
+            const localStorageData = localStorage.getItem("product");
+            console.log(JSON.parse(localStorageData));
+            alert("Get data from local Storage");
+        };
+        const deleteTodoList = ()=>{
+            const localStorageData = localStorage.removeItem("product");
+            console.log(localStorageData);
+            alert("Remove data from local Storage");
+        };
+        addButton.addEventListener("click", addTodoList);
+        getButton.addEventListener("click", getTodoList);
+        removeButton.addEventListener("click", deleteTodoList);
+    </script>
+</body>
+</html>
