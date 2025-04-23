@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Color Gradient</title>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body{
+            width: 100%;
+            height: 100vh;
+            background-image: linear-gradient(
+                to right top,
+                #051937,
+                #004d7a,
+                #008793,
+                #00bf72,
+                #a8eb12
+            );
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        #myButton, #myButton2{
+            width: 150px;
+            height: 50px;
+            border: none;
+            border-radius: 30px;
+            padding: 5px;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            font-size: 18px;
+            font-weight: 500;
+        }
+        #myButton{
+            background: #051937;
+            color: #BBCCD8;
+            margin-right: 50px;
+        }
+        #myButton2{
+            background: #A7EB10;
+            color: #0F3600;
+        }
+        .colorBtn{
+            display: flex;
+            justify-content:center;
+            align-items: center;
+        }
+        h2{
+            display: flex;
+            justify-content: center;
+            color: #fff;
+            font-size: 20px;
+            margin-top: 15px;
+            margin-bottom: 20px;
+        }
+        .copyCode{
+            width: 350px;
+            display: flex;
+            justify-content: center;
+            margin-top: 40px;
+            padding: 15px 20px;
+            background-color: rgba(0, 0, 0, 0.2);
+            border-radius: 7px;
+            border-left: 3px solid #fff;
+            color: #fff;
+            font-size: 20px;
+            line-height: 30px;
+        }
+
+    </style>
+</head>
+<body>
+    <section>
+        <div class="colorBtn">
+            <button id="myButton">#051937</button>
+            <button id="myButton2">#008793</button>
+        </div>
+        <h2>Copy your code here</h2>
+        <div class="copyCode">
+            background-image: linear-gradient(to right, rgb(92, 145, 229), rgb(152, 63, 198))
+        </div>
+    </section>
+    <script>
+        const btn1 = document.getElementById("myButton");
+        const btn2 = document.getElementById("myButton2");
+        const copyCode = document.querySelector(".copyCode");
+        let rgb1 = "#014B78";
+        let rgb2 = "#59D63E";
+
+        const hexValues = () =>{
+            const myHexValues = "0123456789abcdef";
+            let colorCode = "#";
+            for(let i = 0; i<6; i++){
+                let ranIndx = Math.floor(Math.random() * 16);
+                colorCode += myHexValues[ranIndx];
+            }
+            return colorCode;
+        };
+
+        const handleBtn1 = ()=>{
+            rgb1 = hexValues();
+            //console.log(rgb1);
+            document.body.style.backgroundImage = `
+                linear-gradient(
+                    to right top,
+                    ${rgb1},
+                    ${rgb2}
+                )
+            `;
+            copyCode.textContent = `
+                background-image: linear-gradient(to right, ${rgb1}, ${rgb2})
+            `;
+            btn1.innerText = rgb1;
+        };
+
+        const handleBtn2 = ()=>{
+            rgb2 = hexValues();
+            //console.log(rgb1);
+            document.body.style.backgroundImage = `
+                linear-gradient(
+                    to right top,
+                    ${rgb1},
+                    ${rgb2}
+                )
+            `;
+            copyCode.textContent = `
+                background-image: linear-gradient(to right, ${rgb1}, ${rgb2})
+            `;
+            btn2.innerText = rgb2;
+        };
+
+        btn1.addEventListener("click", handleBtn1);
+        btn2.addEventListener("click", handleBtn2);
+        copyCode.addEventListener("click", ()=>{
+            navigator.clipboard.writeText(copyCode.innerText);
+            alert("Copied, gradient background css code !!");
+        });
+    </script>
+</body>
+</html>
