@@ -57,6 +57,8 @@
             font-size: 17px;
             letter-spacing: 2px;
         }
+        .todo-list-elem li::first-letter{text-transform: uppercase;}
+
         .deleteBtn{
             width: 75px;
             font-size: 16px;
@@ -71,7 +73,7 @@
     <h1>Todo List</h1>
     <form class="input-container">
         <div>
-            <input type="text" name="todoList" id="inputValue">
+            <input type="text" name="todoList" id="inputValue" placeholder="Enter your text">
             <button id="addBtn">Add Todo</button>
         </div>
 
@@ -79,47 +81,40 @@
     </form>
 
         
-
     <script>
         const inputField = document.getElementById("inputValue");
         const addBtn = document.getElementById("addBtn");
-        const listViewer = document.querySelector("#todo-list-viewer");
+        const todoListViewer = document.querySelector("#todo-list-viewer");
 
         const getTodoListsFromLocal = ()=>{
             return JSON.parse(localStorage.getItem("todoLists"));
         };
+        const addTodoListLocalStorage = (todoLists)=>{
+            localStorage.setItem("todoLists", JSON.stringify(todoLists));
+        };
+
         let todoLists = getTodoListsFromLocal() || [];
         
         const addTodoDynamicElement = (curVal, arr)=>{
             const div = document.createElement("div");
-            const li = document.createElement("li");
-            const btn = document.createElement("button");
-
-            btn.innerText = "Delete";
-            btn.classList.add("deleteBtn");
-            btn.addEventListener('click', ()=> {
-                div.remove();
-                arr.splice(arr.indexOf(curVal), 1);
-                localStorage.setItem("todoLists", JSON.stringify(arr));
-            });
-            li.textContent = curVal;
+            
             div.classList.add("todo-list-elem");
-
-            div.append(li, btn);
+            div.innerHTML = `<li>${curVal}</li><button class="deleteBtn">Delete</button>`;
             //console.log(li);
-            listViewer.append(div);
+            todoListViewer.append(div);
         };
 
         const showTodoLists = ()=>{
-            listViewer.innerHTML = "";
+            todoListViewer.innerHTML = "";
             todoLists.forEach((curVal, indx, arr)=>{
                 addTodoDynamicElement(curVal, arr);
             });
         };
 
+        showTodoLists();
+
         const addTodoList = (e)=>{
             e.preventDefault();
-            todoLists = getTodoListsFromLocal() || [];
 
             const inputVal = inputField.value.trim();
             inputField.value = "";
@@ -127,7 +122,7 @@
                 todoLists.push(inputVal);
                 // todoLists = [...new Set(todoLists)];
                 
-                localStorage.setItem("todoLists", JSON.stringify(todoLists));
+                addTodoListLocalStorage(todoLists);
                 
                 showTodoLists();
             }
@@ -137,7 +132,22 @@
             addTodoList(e);
         });
 
-       showTodoLists();
+        const removeTodoElem = (e)=>{
+            const todoToRemove = e.target;
+            let todoListContent = todoToRemove.previousElementSibling.innerText;
+
+            todoLists = todoLists.filter((curTodoVal)=>{
+                return todoListContent.toLowerCase() !== curTodoVal.toLowerCase();
+            });
+            addTodoListLocalStorage(todoLists);
+            
+            todoToRemove.parentElement.remove();
+        };
+
+        todoListViewer.addEventListener('click', (e)=>{
+            e.preventDefault();
+            removeTodoElem(e);
+        });
 
     </script>
 </body>
