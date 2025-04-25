@@ -90,26 +90,30 @@
         };
         let todoLists = getTodoListsFromLocal() || [];
         
+        const addTodoDynamicElement = (curVal, arr)=>{
+            const div = document.createElement("div");
+            const li = document.createElement("li");
+            const btn = document.createElement("button");
+
+            btn.innerText = "Delete";
+            btn.classList.add("deleteBtn");
+            btn.addEventListener('click', ()=> {
+                div.remove();
+                arr.splice(arr.indexOf(curVal), 1);
+                localStorage.setItem("todoLists", JSON.stringify(arr));
+            });
+            li.textContent = curVal;
+            div.classList.add("todo-list-elem");
+
+            div.append(li, btn);
+            //console.log(li);
+            listViewer.append(div);
+        };
+
         const showTodoLists = ()=>{
             listViewer.innerHTML = "";
-            todoLists.forEach((val, indx, arr)=>{
-                const div = document.createElement("div");
-                const li = document.createElement("li");
-                const btn = document.createElement("button");
-
-                btn.innerText = "Delete";
-                btn.classList.add("deleteBtn");
-                btn.addEventListener('click', ()=> {
-                    div.remove();
-                    arr.splice(arr.indexOf(val), 1);
-                    localStorage.setItem("todoLists", JSON.stringify(arr));
-                });
-                li.textContent = val;
-                div.classList.add("todo-list-elem");
-
-                div.append(li, btn);
-                //console.log(li);
-                listViewer.append(div);
+            todoLists.forEach((curVal, indx, arr)=>{
+                addTodoDynamicElement(curVal, arr);
             });
         };
 
