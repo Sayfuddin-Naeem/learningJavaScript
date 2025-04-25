@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Todo List</title>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body{
+            width: 100%;
+            height: 100vh;
+            background: #1B1A1D;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        h1{
+            color: antiquewhite;
+            margin-bottom: 20px;
+            margin-right: 60px;
+        }
+        #inputValue{
+            width: 250px;
+            height: 35px;
+            padding: 5px;
+            margin-right: 20px;
+            border-radius: 5px;
+        }
+        #addBtn{
+            font-size: 16px;
+            font-weight: 400;
+            padding: 10px;
+            background: #1B1A1D;
+            color: #f9f78d;
+            border: 2px solid #f9f78d;
+            border-radius: 20px;
+        }
+        #todo-list-viewer{            
+            margin-top: 30px;
+            margin-bottom: 10px;
+            color: #fff;
+        }
+        .todo-list-elem{
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+        .todo-list-elem li{
+            list-style: circle;
+            font-size: 17px;
+            letter-spacing: 2px;
+        }
+        .deleteBtn{
+            width: 75px;
+            font-size: 16px;
+            background-color: #f0ed50;
+            padding: 8px;
+            border: none;
+            border-radius: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Todo List</h1>
+    <form class="input-container">
+        <div>
+            <input type="text" name="todoList" id="inputValue">
+            <button id="addBtn">Add Todo</button>
+        </div>
+
+        <section id="todo-list-viewer"></section>
+    </form>
+
+        
+
+    <script>
+        const inputField = document.getElementById("inputValue");
+        const addBtn = document.getElementById("addBtn");
+        const listViewer = document.querySelector("#todo-list-viewer");
+
+        const getTodoListsFromLocal = ()=>{
+            return JSON.parse(localStorage.getItem("todoLists"));
+        };
+        let todoLists = getTodoListsFromLocal() || [];
+        
+        const showTodoLists = ()=>{
+            listViewer.innerHTML = "";
+            todoLists.forEach((val, indx, arr)=>{
+                const div = document.createElement("div");
+                const li = document.createElement("li");
+                const btn = document.createElement("button");
+
+                btn.innerText = "Delete";
+                btn.classList.add("deleteBtn");
+                btn.addEventListener('click', ()=> {
+                    div.remove();
+                    arr.splice(arr.indexOf(val), 1);
+                    localStorage.setItem("todoLists", JSON.stringify(arr));
+                });
+                li.textContent = val;
+                div.classList.add("todo-list-elem");
+
+                div.append(li, btn);
+                //console.log(li);
+                listViewer.append(div);
+            });
+        };
+
+        const addTodoList = (e)=>{
+            e.preventDefault();
+            todoLists = getTodoListsFromLocal() || [];
+
+            const inputVal = inputField.value.trim();
+            inputField.value = "";
+            if(inputVal !== "" && !todoLists.includes(inputVal)){
+                todoLists.push(inputVal);
+                // todoLists = [...new Set(todoLists)];
+                
+                localStorage.setItem("todoLists", JSON.stringify(todoLists));
+                
+                showTodoLists();
+            }
+            
+        };
+        addBtn.addEventListener('click', (e)=>{
+            addTodoList(e);
+        });
+
+       showTodoLists();
+
+    </script>
+</body>
+</html>
