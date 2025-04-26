@@ -146,7 +146,8 @@
 
         todoListViewer.addEventListener('click', (e)=>{
             e.preventDefault();
-            removeTodoElem(e);
+            if(e.target.classList.contains("deleteBtn"))
+                removeTodoElem(e);
         });
 
     </script>
