@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Timer</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <section>
+      <p id="countDown">0</p>
+      <div class="buttons">
+        <button class="start_btn">Start</button>
+        <button class="reset_btn">Reset</button>
+        <button class="stop_btn">Stop</button>
+        <button class="time_btn">getTime</button>
+        <button class="clear_btn">clearTime</button>
+      </div>
+      <div class="resetValue"></div>
+    </section>
+    <script>
+      const countDownElem = document.querySelector("#countDown");
+      const showCountDownElem = document.querySelector(".resetValue");
+      let intervalID;
+      let countVal = 0;
+
+      const stopCountDown = ()=>{
+        clearInterval(intervalID);
+      };
+
+      const resetCountDown = ()=>{
+            clearInterval(intervalID);
+            countVal = 0;
+            countDownElem.textContent = countVal;
+      };
+
+      const runCountDown = ()=>{
+        clearInterval(intervalID);
+        intervalID = setInterval(() => {
+            countDownElem.textContent = ++countVal;
+        }, 1000);
+      };
+
+      const showTimeValue = ()=>{
+        const newP = document.createElement("p");
+        const timeVal = countDownElem.textContent;
+        newP.innerText = `The stop time is ${(timeVal === "0")? -1 : timeVal}`;
+        showCountDownElem.append(newP);
+      };
+
+      // Start Count Down
+      const startBtn = document.querySelector(".start_btn");
+      startBtn.addEventListener('click', runCountDown);
+
+      // Stop Count Down
+      const stopBtn = document.querySelector(".stop_btn");
+      stopBtn.addEventListener('click', ()=>{
+        stopCountDown();
+        showTimeValue();
+      });
+        
+      // Reset Count Down
+      const resetBtn = document.querySelector(".reset_btn");
+      resetBtn.addEventListener('click', ()=> resetCountDown());
+
+      //   Get Count Down Time and Show
+      const getTimeBtn = document.querySelector(".time_btn");
+      
+      getTimeBtn.addEventListener('click', showTimeValue);
+
+      const clearTimeBtn = document.querySelector(".clear_btn");
+      clearTimeBtn.addEventListener('click', ()=>{
+        showCountDownElem.textContent = "";
+      });
+
+
+      
+    </script>
+  </body>
+</html>
