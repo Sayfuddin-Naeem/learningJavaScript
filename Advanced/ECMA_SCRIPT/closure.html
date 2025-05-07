@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Closure Like Button</title>
+</head>
+<body>
+
+  <button id="likeBtn">Like ❤️</button>
+  <p id="likeCount">Likes: 0</p>
+
+  <script>
+    // Closure function that creates a private counter
+    function createLikeCounter() {
+      let count = 0; // private variable
+
+      return function () {
+        count++;
+        document.getElementById("likeCount").innerText = `Likes: ${count}`;
+      };
+    }
+
+    const likeButtonClick = createLikeCounter(); // closure created
+
+    // Attach event listener to button
+    document.getElementById("likeBtn").addEventListener("click", likeButtonClick);
+  </script>
+
+</body>
+</html>
