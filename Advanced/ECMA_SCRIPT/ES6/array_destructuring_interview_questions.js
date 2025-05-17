@@ -1,12 +1,13 @@
 //todo 1.First and Last: Write a function getFirstAndLast(arr) that takes an array as input and returns a new array containing only the first and last elements of the input array, using array destructuring.
 
-function getFirstAndLast(arr) {
-  const [first, ...rest, last] = arr;
-  return [first, last];
-}
+// function getFirstAndLast(arr) {
+//   const [first] = arr;
+//   const last = arr.at(-1);
+//   return [first, last];
+// }
 
-const barishalDistricts = ["Barishal Sadar", "Bakerganj", "Mehendiganj", "Muladi", "Agailjhara"];
-console.log(getFirstAndLast(barishalDistricts));
+// const barishalDistricts = ["Barishal Sadar", "Bakerganj", "Mehendiganj", "Muladi", "Agailjhara"];
+// console.log(getFirstAndLast(barishalDistricts));
 
 // todo 2.Extracting Specific Elements: Write a function getSecondAndFourth(arr) that takes an array and returns an object containing the second and fourth elements of the array with keys second and fourth, respectively, using destructuring.
 
