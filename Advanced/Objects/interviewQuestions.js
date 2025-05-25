@@ -73,3 +73,69 @@
 // ];
 
 // console.log(arrayToObj(inputArray));
+
+//! Sealed an object without built-in function
+
+// const mySeal = (obj)=>{
+//     Object.preventExtensions(obj);
+
+//     Object.getOwnPropertyNames(obj).forEach( prop =>{
+//         const descriptor = Object.getOwnPropertyDescriptor(obj, prop);
+//         if("value" in descriptor){
+//             Object.defineProperty(obj, prop, {
+//                 ...descriptor,
+//                 configurable : false
+//             });
+//         }
+//     });
+
+//     return obj;
+// };
+
+// const user = {
+//   name: "Sayfuddin",
+//   age: 23
+// };
+
+// mySeal(user);
+
+// user.name = "Naeem";
+// console.log(user);
+// delete user.age;
+// console.log(user);
+// user.city = "Barishal";
+// console.log(user);
+
+// ! Freeze object without built-in function
+
+// const myFreeze = (obj)=>{
+//     Object.preventExtensions(obj);
+
+//     Object.getOwnPropertyNames(obj).forEach(prop => {
+//         const descriptor = Object.getOwnPropertyDescriptor(obj, prop);
+//         if('value' in descriptor){
+//             Object.defineProperty(obj, prop, {
+//                 value : descriptor.value,
+//                 writable : false,
+//                 configurable : false,
+//                 enumerable : descriptor.enumerable
+//             });
+//         }
+//     });
+
+//     return obj;
+// };
+
+// const user = {
+//   name: "Sayfuddin",
+//   age: 23
+// };
+
+// console.log(myFreeze(user));
+
+// user.name = "Naeem";
+// console.log(user);
+// delete user.age;
+// console.log(user);
+// user.city = "Barishal";
+// console.log(user);
