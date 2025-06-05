@@ -125,36 +125,7 @@
 // console.log(endsWithObjectPrototype(() => {}));        // true
 // console.log(endsWithObjectPrototype(Object.create(null))); // false
 
-// todo 7. Add Polyfill for Array.prototype.myMap()
-//* Problem:
-//* Implement your own version of Array.prototype.map() using prototype.
-
-// Array.prototype.myMap = function(callback, thisArg) {
-//   if(this == null){
-//     throw new TypeError('Array.prototype.myMap is called on null or undefine');
-//   }
-
-//   if(typeof callback !== 'function'){
-//     throw new TypeError(callback + ' is not a function');
-//   }
-
-//   const O = Object(this);
-//   const len = O.length >>> 0;
-//   const result = new Array(len);
-
-//   for(let i = 0; i < len; i++){
-//     if(i in O){
-//         result[i] = callback.call(thisArg, O[i], i, O);
-//     }
-//   }
-
-//   return result;
-// };
-
-// const arr = [1, 2, 3].myMap(x => x ** 10); // [10, 20, 30]
-// console.log(arr);
-
-// todo 8. Deep Prototype Chain Traversal
+// todo 7. Deep Prototype Chain Traversal
 //* Problem:
 //* Write a function getPrototypeDepth(obj) that returns how deep the prototype chain goes before hitting null.
 
@@ -184,7 +155,7 @@
 // const obj = {};
 // console.log(getPrototypeDepth(obj)); // Output: 2 (obj → Object.prototype → null)
 
-// todo 9. Fake class Keyword with Prototypes
+// todo 8. Fake class Keyword with Prototypes
 //* Problem:
 //* Without using class, simulate inheritance between two constructor functions, including method overriding and super-like behavior.
 
@@ -208,7 +179,7 @@
 // const d = new Dog("Bruno");
 // console.log(d.sayHi());
 
-// todo 10. Static and Private property
+// todo 9. Static and Private property
 
 // function Animal(name) {
 //   let sound = "some noise"; // private
@@ -244,7 +215,7 @@
 // console.log(d.getSound());        // "some noise"
 // console.log(Animal.kingdom(), Animal.staticPro);    // "Animalia"
 
-//todo 11. Override Method Only for One Instance
+//todo 10. Override Method Only for One Instance
 //* Problem:
 //* Create two instances from the same constructor. Override a prototype method only for one instance without affecting the other.
 
@@ -265,54 +236,54 @@
 // }
 // console.log(a.greet());
 
-// todo 12.Freeze the Prototype Chain
+// todo 11.Freeze the Prototype Chain
 //* Problem:
 //* Write a function freezePrototype(obj) that freezes all prototype levels up to Object.prototype.
 
-function freezePrototype(obj){
-    const seen = new WeakSet();
+// function freezePrototype(obj){
+//     const seen = new WeakSet();
 
-    while(obj && obj !== Object.prototype){
-        if(!seen.has(obj)){
-            Object.freeze(obj);
-            seen.add(obj);
-        }
-        obj = Object.getPrototypeOf(obj);
-    }
+//     while(obj && obj !== Object.prototype){
+//         if(!seen.has(obj)){
+//             Object.freeze(obj);
+//             seen.add(obj);
+//         }
+//         obj = Object.getPrototypeOf(obj);
+//     }
 
-    Object.freeze(Object.prototype);
-}
+//     Object.freeze(Object.prototype);
+// }
 
-function Animal() {
-  this.type = "animal";
-}
+// function Animal() {
+//   this.type = "animal";
+// }
 
-Animal.prototype.speak = function () {
-  console.log("Animal sound");
-};
+// Animal.prototype.speak = function () {
+//   console.log("Animal sound");
+// };
 
-function Dog() {
-  Animal.call(this);
-  this.breed = "Labrador";
-}
+// function Dog() {
+//   Animal.call(this);
+//   this.breed = "Labrador";
+// }
 
-Dog.prototype = Object.create(Animal.prototype);
-Dog.prototype.constructor = Dog;
-Dog.prototype.bark = function () {
-  console.log("Woof!");
-};
+// Dog.prototype = Object.create(Animal.prototype);
+// Dog.prototype.constructor = Dog;
+// Dog.prototype.bark = function () {
+//   console.log("Woof!");
+// };
 
-const dog = new Dog();
+// const dog = new Dog();
 
-// Freeze everything in the prototype chain
-freezePrototype(dog);
+// // Freeze everything in the prototype chain
+// freezePrototype(dog);
 
-// Try modifying prototypes
-dog.__proto__.bark = () => console.log("Changed!"); // ❌ fails silently in non-strict
-console.log(dog.__proto__.bark); // Still original
+// // Try modifying prototypes
+// dog.__proto__.bark = () => console.log("Changed!"); // ❌ fails silently in non-strict
+// console.log(dog.__proto__.bark); // Still original
 
-// Try modifying Animal.prototype
-Animal.prototype.speak = () => console.log("Changed!"); // ❌
+// // Try modifying Animal.prototype
+// Animal.prototype.speak = () => console.log("Changed!"); // ❌
 
-console.log(Object.isFrozen(Animal.prototype)); // true
-console.log(Object.isFrozen(Dog.prototype)); // true
+// console.log(Object.isFrozen(Animal.prototype)); // true
+// console.log(Object.isFrozen(Dog.prototype)); // true
